@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../static/css/manager.css">
+</head>
+<body>
+    <div id="manager">
+        <template>
+            <el-table
+                ref="multipleTable"
+                :data="tableData"
+                style="width: 100%"
+                @selection-change="handleSelectionChange">
+                <el-table-column
+                    type="selection"
+                    width="55">
+                </el-table-column>
+                <el-table-column
+                    fixed
+                    prop="id"
+                    label="ID"
+                    width="200">
+                </el-table-column>
+                <el-table-column
+                    fixed
+                    prop="type"
+                    label="类别"
+                    width="150">
+                </el-table-column>
+                <el-table-column
+                    align="right">
+                    <template slot="header" slot-scope="scope">
+                        <el-input
+                        v-model="search"
+                        size="mini"
+                        placeholder="输入关键字搜索"/>
+                    </template>
+                    <template slot-scope="scope">
+                        <!-- <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)">Edit</el-button> -->
+                        <!-- <el-button
+                        size="mini"
+                        type="danger"
+                        @click="handleDelete(scope.$index, scope.row)">Delete</el-button> -->
+                        <el-button type="text" @click="handleEdit(scope.$index, scope.row)" size="mini">Edit</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <div style="margin-top: 20px">
+                <el-button type="danger" @click="toggleDelete()">删除</el-button>
+                <el-button @click="toggleSelection()">取消选择</el-button>
+            </div>
+        </template>
+        <!-- dialog -->
+        <el-dialog title="详细信息" :visible.sync="dialogFormVisible">
+            <el-form :model="form">
+                <el-form-item label="ID" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off" style="width: 300px;"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <img v-bind:src="imgSrc">
+                </el-form-item>
+                <el-form-item label="类别" :label-width="formLabelWidth">
+                    <el-select v-model="form.category" placeholder="请选择类别">
+                        <el-option label="生活写真" value="生活写真"></el-option>
+                        <el-option label="炫彩壁纸" value="炫彩壁纸"></el-option>
+                        <el-option label="动物植物" value="动物植物"></el-option>
+                        <el-option label="美食壁纸" value="美食壁纸"></el-option>
+                        <el-option label="人物写真" value="人物写真"></el-option>
+                        <el-option label="设计创意" value="设计创意"></el-option>
+                        <el-option label="体育壁纸" value="体育壁纸"></el-option>
+                        <el-option label="自然风景" value="自然风景"></el-option>
+                        <el-option label="其他壁纸" value="其他壁纸"></el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="changePost()">确 定</el-button>
+            </div>
+        </el-dialog>
+        <div class="pagination">
+            <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page.sync="currentPage"
+                :page-size="7"
+                layout="prev, pager, next"
+                :total="total">
+            </el-pagination>
+        </div>
+        
+    </div>
+</body>
+<script src="../static/js/vue.js"></script>
+<script src="../static/js/axios.js"></script>
+<script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../static/js/manager.js"></script>
+</html>

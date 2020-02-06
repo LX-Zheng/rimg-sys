@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+
+# local venv
+venv
+
+# local log files
+flask.log*

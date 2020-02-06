@@ -1,0 +1,13 @@
+img {
+	width: auto;
+	height: auto;
+	max-width: 30%;
+	max-height: 30%;	
+}
+
+/* 分页的样式 */
+.pagination {
+	margin: 0 auto;
+	height: 40px;
+	width: 400px;
+}

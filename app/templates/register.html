@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+    <div id="register">
+        <table>
+            <tr>
+                <td>昵称:</td>
+                <td><el-input v-model="name" placeholder="请输入昵称"></el-input></td>
+            </tr>
+            <tr>
+                <td>账号:</td>
+                <td><el-input v-model="account" placeholder="请输入账号"></el-input></td>
+            </tr>
+            <tr>
+                <td>密码:</td>
+                <td><el-input v-model="password" placeholder="请输入密码"></el-input></td>
+            </tr>
+        </table>
+        <el-button type="primary" @click="register()">登陆</el-button>
+    </div>
+</body>
+<script src="../static/js/vue.js"></script>
+<script src="../static/js/axios.js"></script>
+<!-- 引入组件库 -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="../static/js/register.js"></script>
+</html>
