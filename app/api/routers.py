@@ -15,7 +15,7 @@ def u_login():
     data = db.session.query(User).filter(User.u_account == account).first()
     result = data.to_dict()
     if password == result['u_password']:
-        return jsonify({'status': 1})
+        return jsonify({'status': 1, 'u_name': result['u_name']})
     else:
         return jsonify({'status': 0})
 

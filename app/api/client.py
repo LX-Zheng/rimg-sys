@@ -72,6 +72,14 @@ def getFavorate():
     mid = db.session.query(UserPaper).filter(UserPaper.u_id == u_id).all()
     db.session.close()
     result = dict()
-    for i,element in enumerate(mid):
+    for i, element in enumerate(mid):
         result[i] = element.to_dict()
     return json.dumps(result)
+
+
+# record user behavior
+@app.route('/record', methods=['POST'])
+def record():
+    data = json.loads(request.data)
+    print(data)
+    return jsonify({'success': '1'})
