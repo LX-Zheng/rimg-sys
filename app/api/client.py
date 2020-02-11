@@ -2,7 +2,7 @@ import json
 
 from app import app, db
 from flask import request, jsonify, Response
-from app.models import WellPaper, UserPaper
+from app.models import WellPaper, UserPaper, UserLoad
 
 
 @app.route('/getPaper', methods=['POST'])
@@ -83,3 +83,32 @@ def record():
     data = json.loads(request.data)
     print(data)
     return jsonify({'success': '1'})
+
+
+# user download image
+@app.route('/download', methods=['POST'])
+def download():
+    data = json.loads(request.data)
+    wp_id = data.get('id')
+    u_id = data.get('u_id')
+    wp_url = data.get('wp_url')
+    load = db.session.query(UserLoad).filter(UserLoad.u_id == u_id, UserLoad.wp_id == wp_id).first()
+    if not load:
+        load = UserLoad(u_id, wp_id, wp_url)
+        db.session.add(load)
+        db.session.commit()
+    db.session.close()
+    return jsonify({'success': 1})
+
+
+# user download record
+@app.route('/getLoad', methods=['POST'])
+def getLoad():
+    data = json.loads(request.data)
+    u_id = data.get('u_id')
+    mid = db.session.query(UserLoad).filter(UserLoad.u_id == u_id).all()
+    db.session.close()
+    result = dict()
+    for i, element in enumerate(mid):
+        result[i] = element.to_dict()
+    return json.dumps(result)

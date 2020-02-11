@@ -34,4 +34,4 @@ def userReg():
     db.session.add(user)
     db.session.commit()
     app.logger.info(account+"用户注册")
-    return "register success"
+    return jsonify({'status': 1})

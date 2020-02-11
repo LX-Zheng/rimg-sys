@@ -1,8 +1,12 @@
 .DS_Store
-.idea
+.idea/
+__pycache__/
 
 # local venv
 venv
 
 # local log files
 flask.log*
+
+# python
+*.py[cod]

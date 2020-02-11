@@ -49,3 +49,19 @@ class UserPaper(db.Model):
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class UserLoad(db.Model):
+    __tablename__ = 'user_download'
+    id = db.Column(db.Integer, primary_key=True)
+    u_id = db.Column(db.Integer)
+    wp_id = db.Column(db.String(64))
+    wp_url = db.Column(db.String(64))
+
+    def __init__(self, u_id, wp_id, wp_url):
+        self.u_id = u_id
+        self.wp_id = wp_id
+        self.wp_url = wp_url
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
