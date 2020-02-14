@@ -1,12 +1,12 @@
-from flask import Flask, make_response
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 import os
+from flask import Flask, make_response
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://{user}:{password}@{server}/{database}'.format(
-    user='root', password='', server='120.77.203.242', database='webmanager')
+    user='root', password='root', server='120.77.203.242', database='webmanager')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # 设置图片地址

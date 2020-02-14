@@ -6,7 +6,7 @@ from app import app, db
 from flask import request, render_template, jsonify
 import os
 
-from app.api.utils import Pic_str
+from app.api.utils import Pic_str, Reptile
 from app.models import WellPaper
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -29,6 +29,11 @@ def showUp():
 @app.route('/manage')
 def showManage():
     return render_template("manage.html")
+
+
+@app.route('/reptile')
+def showReptile():
+    return render_template("reptile.html")
 
 
 # 图片的上传
@@ -91,5 +96,24 @@ def paper_delete():
         # 删除本地的对应图片
         os.remove(paper.wp_url)
         app.logger.info(paper.wp_id+"已经被删除")
+    db.session.commit()
+    return jsonify({"success": 0})
+
+
+# 爬虫写入图片
+@app.route('/reptile_img', methods=['POST'])
+def reptileImg():
+    data = json.loads(request.data)
+    url = data.get('url')
+    start = data.get('start')
+    end = data.get('end')
+    type = data.get('type')
+    file_dir = os.path.join(basedir, app.config['UPLOAD_FOLDER'])
+    r = Reptile(file_dir)
+    for i in range(int(start), int(end)):
+        name = r.crawling(url.replace(start, str(i)))
+        paper = WellPaper(name, type, os.path.join(file_dir, name))
+        db.session.add(paper)
+        app.logger.info(name + "上传到服务器")
     db.session.commit()
     return jsonify({"success": 0})

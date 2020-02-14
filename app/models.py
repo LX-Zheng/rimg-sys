@@ -22,12 +22,13 @@ class User(db.Model):
 
 class WellPaper(db.Model):
     __tablename__ = 'wellpaper'
-    wp_id = db.Column(db.String(64), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    wp_id = db.Column(db.String(64))
     wp_type = db.Column(db.String(64))
     wp_url = db.Column(db.String(64))
 
-    def __init__(self, id, type, url):
-        self.wp_id = id
+    def __init__(self, wp_id, type, url):
+        self.wp_id = wp_id
         self.wp_type = type
         self.wp_url = url
 

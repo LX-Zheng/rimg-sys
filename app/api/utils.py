@@ -1,5 +1,10 @@
 import datetime
 import random
+import urllib.request
+import re
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class Pic_str:
@@ -8,6 +13,26 @@ class Pic_str:
         randomNum = random.randint(0, 100)
         uniqueNum = str(nowTime) + str(randomNum)
         return uniqueNum
+
+
+class Reptile:
+    def __init__(self, pos):
+        self.urlStr = str()
+        self.pos = pos
+
+    def crawling(self, url):
+        global html
+        req = urllib.request.urlopen(url)
+        try:
+            html = req.read().decode("gb2312")
+        except UnicodeDecodeError:
+            print("err")
+        reg = r'src="(.+?\.jpg)"'
+        imgre = re.compile(reg)
+        self.urlStr = imgre.findall(html)[0]
+        name = Pic_str().create_uuid() + '.jpg'
+        urllib.request.urlretrieve(self.urlStr, self.pos+'/'+name)
+        return name
 
 
 def type_to_type(type):
