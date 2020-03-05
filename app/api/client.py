@@ -2,7 +2,12 @@ import json
 
 from app import app, db
 from flask import request, jsonify, Response
+
+from app.dbUtils import config
 from app.models import WellPaper, UserPaper, UserLoad
+
+# redis
+redis = config.conn()
 
 
 @app.route('/getPaper', methods=['POST'])
@@ -28,6 +33,7 @@ def getPaper():
             result.get(i)['favorate'] = True
         else:
             result.get(i)['favorate'] = False
+    print(result)
     return json.dumps(result)
 
 
@@ -47,6 +53,7 @@ def addPaper():
     u_id = data.get('u_id')
     wp_id = data.get('wp_id')
     wp_url = data.get('wp_url')
+    wp = data.get('wp')
     paper = db.session.query(UserPaper).filter(UserPaper.wp_id == wp_id).first()
     # if paper exist execute delete else add new paper
     # return 0 execute delete
@@ -61,6 +68,10 @@ def addPaper():
         db.session.add(paper)
         db.session.commit()
         db.session.close()
+        # 所有用户收藏的物品列表
+        redis.hset('items', wp, json.dumps({'wp_id': wp_id, 'wp_url': wp_url}))
+        # 添加用户的收藏记录
+        redis.hset('user_item', u_id, json.dumps({wp: 1.0}))
         return jsonify({'success': '1'})
 
 

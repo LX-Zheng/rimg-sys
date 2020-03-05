@@ -114,6 +114,6 @@ def reptileImg():
         name = r.crawling(url.replace(start, str(i)))
         paper = WellPaper(name, type, os.path.join(file_dir, name))
         db.session.add(paper)
-        app.logger.info(name + "上传到服务器")
+        app.logger.info(name + "上传到服务器;种类:" + type)
     db.session.commit()
     return jsonify({"success": 0})
