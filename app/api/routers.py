@@ -15,7 +15,7 @@ def u_login():
     data = db.session.query(User).filter(User.u_account == account).first()
     result = data.to_dict()
     if password == result['u_password']:
-        return jsonify({'status': 1, 'u_name': result['u_name']})
+        return jsonify({'status': 1, 'u_name': result['u_name'], 'id': result['u_id']})
     else:
         return jsonify({'status': 0})
 
@@ -25,7 +25,7 @@ def register():
     return render_template("register.html")
 
 
-@app.route('/userReg/', methods=['GET'])
+@app.route('/userReg', methods=['GET'])
 def userReg():
     name = request.args.get("name")
     account = request.args.get("account")

@@ -53,7 +53,7 @@ def addPaper():
     u_id = data.get('u_id')
     wp_id = data.get('wp_id')
     wp_url = data.get('wp_url')
-    wp = data.get('wp')
+    # wp = data.get('wp')
     paper = db.session.query(UserPaper).filter(UserPaper.wp_id == wp_id).first()
     # if paper exist execute delete else add new paper
     # return 0 execute delete
@@ -69,9 +69,15 @@ def addPaper():
         db.session.commit()
         db.session.close()
         # 所有用户收藏的物品列表
-        redis.hset('items', wp, json.dumps({'wp_id': wp_id, 'wp_url': wp_url}))
+        # redis.hset('items', wp, json.dumps({'wp_id': wp_id, 'wp_url': wp_url}))
         # 添加用户的收藏记录
-        redis.hset('user_item', u_id, json.dumps({wp: 1.0}))
+        # redis.hset('user_item', u_id, json.dumps({wp: 1.0}))
+        # 将收藏记录添加到redis
+        # val = redis.hget('hot', wp)
+        # if val is None:
+        #     redis.hset('hot', wp, 1)
+        # else:
+        #     redis.hset('hot', wp, int(val) + 1)
         return jsonify({'success': '1'})
 
 
@@ -122,4 +128,22 @@ def getLoad():
     result = dict()
     for i, element in enumerate(mid):
         result[i] = element.to_dict()
+    return json.dumps(result)
+
+
+# 从redis中读取壁纸信息
+paper = redis.hgetall("metadata")
+
+
+# recommend function
+@app.route('/getRec', methods=['POST'])
+def getRec():
+    data = json.loads(request.data)
+    u_id = data.get('u_id')
+    res = redis.zrange(str(u_id), start=0, end=-1)
+    result = dict()
+    j = 0
+    for i in res:
+        result[j] = paper[i]
+        j += 1
     return json.dumps(result)

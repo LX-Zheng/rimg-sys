@@ -9,12 +9,15 @@ import os
 from app.models import UserPaper
 
 
-def user_action_to_map(store_path):
+def user_action_to_map():
     """
     将用户行为转化为dict存储到本地
     :param store_path: 存储地址
     :return: null
     """
+    cwd = os.getcwd()
+    f_path = os.path.abspath(os.path.join(cwd, ".."))
+    store_path = f_path + "/output/play_action.npy"
     rec_map = dict()
     data = UserPaper.query.all()
     for i, element in enumerate(data):
@@ -33,9 +36,9 @@ def user_action_to_map(store_path):
     np.save(store_path, rec_map)
 
 
-cwd = os.getcwd()
-f_path = os.path.abspath(os.path.join(cwd, ".."))
-
-store_path = f_path + "/output/play_action.npy"
-user_action_to_map(store_path)
+# cwd = os.getcwd()
+# f_path = os.path.abspath(os.path.join(cwd, ".."))
+#
+# store_path = f_path + "/output/play_action.npy"
+# user_action_to_map(store_path)
 
