@@ -14,6 +14,7 @@ new Vue({
         multipleSelection: [],          // 删除多选框的数据
         currentPage: 1,                 // 当前页
         total: 0,                       // 分页数据项
+        well: ['动物植物', '动漫', '自然风景', '设计创意', '美食壁纸'],
     },
     methods: {
         // edit编辑
@@ -22,7 +23,7 @@ new Vue({
             this.form.name = row.id;
             this.form.category = row.type;
             this.form.row = index;
-            this.imgSrc = ".." + this.tableData[index].url.split("..")[1]
+            this.imgSrc = this.tableData[index].url
         },
         handleDelete(index, row) {
             console.log(index, row);
@@ -36,7 +37,7 @@ new Vue({
             }).then((res) => {
                 console.log(res);
                 if(res.data.success === 0) {
-                    this.tableData[this.form.row].type = this.form.category;
+                    this.tableData[this.form.row].type = this.well[this.form.category];
                 }
             }).catch((err) => {
                 console.log(err);
@@ -93,11 +94,12 @@ new Vue({
             for(let d in res.data){
                 this.tableData.push({
                     id: res.data[d].wp_id,
-                    type: res.data[d].wp_type,
+                    type: this.well[res.data[d].wp_type],
                     url: res.data[d].wp_url
                 })
                 this.total++
             }
+            console.log(this.tableData)
         }).catch((err) => {
             console.log(err);
         })

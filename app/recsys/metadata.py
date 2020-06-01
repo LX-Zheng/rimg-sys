@@ -23,13 +23,12 @@ def save_metadata():
         wp_id = paper['wp_id']
         wp_type = paper['wp_type']
         wp_url = "http://127.0.0.1:5000/photo" + paper['wp_url'].split("/upload")[1]
-        print(wp_url)
         metadata_map[id] = (wp_id, wp_type, wp_url)
     store_path = f_path + "/output/paper_metadata.npy"
     np.save(store_path, metadata_map)
 
 
-save_metadata()
+# save_metadata()
 
 
 

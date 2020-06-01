@@ -14,7 +14,7 @@ from app.models import UserPaper
 def relevance():
     rec_num = 30
     cwd = os.getcwd()
-    f_path = os.path.abspath(os.path.join(cwd, ".."))
+    # f_path = os.path.abspath(os.path.join(cwd, ".."))
 
     user_s = set()
     paper_s = set()
@@ -125,6 +125,7 @@ def cos_sim(vector_a, vector_b):
     cos = inner_product / nom
     return cos
 
+# relevance()
 
 
 

@@ -49,7 +49,7 @@ def savePaper():
     # 保存到本地
     f.save(os.path.join(file_dir, new_filename))
     # 记录到数据库
-    paper = WellPaper(new_filename, '无', os.path.join(file_dir, new_filename))
+    paper = WellPaper(new_filename, '无', "http://127.0.0.1:5000/photo/" + new_filename)
     db.session.add(paper)
     db.session.commit()
     # 日志
@@ -112,7 +112,7 @@ def reptileImg():
     r = Reptile(file_dir)
     for i in range(int(start), int(end)):
         name = r.crawling(url.replace(start, str(i)))
-        paper = WellPaper(name, type, os.path.join(file_dir, name))
+        paper = WellPaper(name, type, "http://127.0.0.1:5000/photo/" + name)
         db.session.add(paper)
         app.logger.info(name + "上传到服务器;种类:" + type)
     db.session.commit()

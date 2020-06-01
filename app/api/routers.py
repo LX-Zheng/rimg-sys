@@ -1,6 +1,6 @@
 from app import app, db
 from flask import request, render_template, jsonify
-from app.models import User
+from app.models import User, Admin
 
 
 @app.route('/')
@@ -16,6 +16,18 @@ def u_login():
     result = data.to_dict()
     if password == result['u_password']:
         return jsonify({'status': 1, 'u_name': result['u_name'], 'id': result['u_id']})
+    else:
+        return jsonify({'status': 0})
+
+
+@app.route('/alogin', methods=['GET'])
+def a_login():
+    account = request.args.get("account")
+    password = request.args.get("password")
+    data = db.session.query(Admin).filter(Admin.a_account == account).first()
+    result = data.to_dict()
+    if password == result['a_password']:
+        return jsonify({'status': 1, 'u_name': result['a_name'], 'id': result['a_id']})
     else:
         return jsonify({'status': 0})
 

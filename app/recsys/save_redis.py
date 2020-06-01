@@ -53,16 +53,12 @@ f_path = os.path.abspath(os.path.join(cwd, ".."))
 # similarity_rec_db = 1
 # save_rec(similarity_rec_p, similarity_rec_db)
 
-item_based_rec_p = f_path + "/output/item_based_rec.npy"
-item_based_rec_db = 2
-save_rec(item_based_rec_p, item_based_rec_db)
 
-
-metadata_p = f_path + "/output/paper_metadata.npy"
-metadata_db = 3
-save_metadata(metadata_p, metadata_db)
-
-
-
-
-
+# --  start
+# item_based_rec_p = f_path + "/output/item_based_rec.npy"
+# item_based_rec_db = 2
+# save_rec(item_based_rec_p, item_based_rec_db)
+#
+# metadata_p = f_path + "/output/paper_metadata.npy"
+# metadata_db = 3
+# save_metadata(metadata_p, metadata_db)

@@ -20,6 +20,22 @@ class User(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+class Admin(db.Model):
+    __tablename__ = 'admin'
+    a_id = db.Column(db.Integer, primary_key=True)
+    a_account = db.Column(db.String(64))
+    a_password = db.Column(db.String(64))
+    a_name = db.Column(db.String(64))
+
+    def __init__(self, account, password, name):
+        self.a_account = account
+        self.a_password = password
+        self.a_name = name
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 class WellPaper(db.Model):
     __tablename__ = 'wellpaper'
     id = db.Column(db.Integer, primary_key=True)
@@ -41,12 +57,10 @@ class UserPaper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     u_id = db.Column(db.Integer)
     wp_id = db.Column(db.String(64))
-    wp_url = db.Column(db.String(64))
 
-    def __init__(self, uid, wpId, wpUrl):
+    def __init__(self, uid, wpId):
         self.u_id = uid
         self.wp_id = wpId
-        self.wp_url = wpUrl
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -57,12 +71,10 @@ class UserLoad(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     u_id = db.Column(db.Integer)
     wp_id = db.Column(db.String(64))
-    wp_url = db.Column(db.String(64))
 
-    def __init__(self, u_id, wp_id, wp_url):
+    def __init__(self, u_id, wp_id):
         self.u_id = u_id
         self.wp_id = wp_id
-        self.wp_url = wp_url
 
     def to_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

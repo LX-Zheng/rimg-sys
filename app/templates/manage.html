@@ -51,7 +51,7 @@
                     </template>
                 </el-table-column>
             </el-table>
-            <div style="margin-top: 20px">
+            <div style="margin-bottom: 40px">
                 <el-button type="danger" @click="toggleDelete()">删除</el-button>
                 <el-button @click="toggleSelection()">取消选择</el-button>
             </div>
@@ -67,15 +67,16 @@
                 </el-form-item>
                 <el-form-item label="类别" :label-width="formLabelWidth">
                     <el-select v-model="form.category" placeholder="请选择类别">
-                        <el-option label="生活写真" value="生活写真"></el-option>
-                        <el-option label="炫彩壁纸" value="炫彩壁纸"></el-option>
-                        <el-option label="动物植物" value="动物植物"></el-option>
-                        <el-option label="美食壁纸" value="美食壁纸"></el-option>
-                        <el-option label="人物写真" value="人物写真"></el-option>
-                        <el-option label="设计创意" value="设计创意"></el-option>
-                        <el-option label="体育壁纸" value="体育壁纸"></el-option>
-                        <el-option label="自然风景" value="自然风景"></el-option>
-                        <el-option label="其他壁纸" value="其他壁纸"></el-option>
+<!--                        <el-option label="炫彩壁纸" value="炫彩壁纸"></el-option>-->
+                        <el-option label="动物植物" value="0"></el-option>
+                        <el-option label="动漫" value="1"></el-option>
+                        <el-option label="自然风景" value="2"></el-option>
+                        <el-option label="设计创意" value="3"></el-option>
+                        <el-option label="美食壁纸" value="4"></el-option>
+<!--                        <el-option label="人物写真" value="人物写真"></el-option>-->
+<!--                        <el-option label="体育壁纸" value="体育壁纸"></el-option>-->
+
+<!--                        <el-option label="其他壁纸" value="其他壁纸"></el-option>-->
                     </el-select>
                 </el-form-item>
             </el-form>

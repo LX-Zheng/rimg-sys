@@ -4,7 +4,7 @@ from app import app, db
 from flask import request, jsonify, Response
 
 from app.dbUtils import config
-from app.models import WellPaper, UserPaper, UserLoad
+from app.models import WellPaper, UserPaper, UserLoad, User
 
 # redis
 redis = config.conn()
@@ -52,7 +52,6 @@ def addPaper():
     data = json.loads(request.data)
     u_id = data.get('u_id')
     wp_id = data.get('wp_id')
-    wp_url = data.get('wp_url')
     # wp = data.get('wp')
     paper = db.session.query(UserPaper).filter(UserPaper.wp_id == wp_id).first()
     # if paper exist execute delete else add new paper
@@ -64,7 +63,7 @@ def addPaper():
         db.session.close()
         return jsonify({'success': '0'})
     else:
-        paper = UserPaper(u_id, wp_id, wp_url)
+        paper = UserPaper(u_id, wp_id)
         db.session.add(paper)
         db.session.commit()
         db.session.close()
@@ -108,10 +107,9 @@ def download():
     data = json.loads(request.data)
     wp_id = data.get('id')
     u_id = data.get('u_id')
-    wp_url = data.get('wp_url')
     load = db.session.query(UserLoad).filter(UserLoad.u_id == u_id, UserLoad.wp_id == wp_id).first()
     if not load:
-        load = UserLoad(u_id, wp_id, wp_url)
+        load = UserLoad(u_id, wp_id)
         db.session.add(load)
         db.session.commit()
     db.session.close()
@@ -147,3 +145,23 @@ def getRec():
         result[j] = paper[i]
         j += 1
     return json.dumps(result)
+
+
+@app.route('/change', methods=['POST'])
+def change():
+    data = json.loads(request.data)
+    u_id = data.get('u_id')
+    name = data.get('name')
+    password = data.get('password')
+    user = db.session.query(User).filter(User.u_id == u_id).first()
+    u = user.to_dict()
+    if u['u_name'] is not name:
+        user.u_name = name
+    if u['u_password'] is not password:
+        user.u_password = password
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({'success': 1})
+
+
+

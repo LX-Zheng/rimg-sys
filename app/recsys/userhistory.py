@@ -41,4 +41,5 @@ def user_action_to_map():
 #
 # store_path = f_path + "/output/play_action.npy"
 # user_action_to_map(store_path)
+user_action_to_map()
 

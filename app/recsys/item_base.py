@@ -39,4 +39,6 @@ def item_base():
     np.save(item_base_rec_path, item_based_rec_map)
 
 
+# item_base()
+
 

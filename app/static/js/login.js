@@ -6,7 +6,7 @@ new Vue({
     },
     methods: {
         login() {
-            axios.get('/login', {
+            axios.get('/alogin', {
                 params: {
                     account: this.account,
                     password: this.password
